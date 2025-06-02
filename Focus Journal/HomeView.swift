@@ -7,11 +7,14 @@
 //
 
 import SwiftUI
+import Adapty
+import AdaptyUI
 
 struct HomeView: View {
   @Environment(ProfileManager.self) private var profileManager
   
   @State private var entryText: String = ""
+  @State private var paywallConfig: AdaptyUI.PaywallConfiguration?
   
   @State private var isShowingPaywall = false
   @State private var isShowingHistory = false
@@ -53,14 +56,46 @@ struct HomeView: View {
         HistoryView()
       }
     }
-    .sheet(isPresented: $isShowingPaywall) {
-      Button {
-        profileManager.subscriptionPurchased()
-        isShowingPaywall = false
-      } label: {
-        Text("Unlock Premium")
+    .iflet(paywallConfig, transform: { view, unwrappedPaywallConfig in
+      view.paywall(
+        isPresented: $isShowingPaywall,
+        fullScreen: false,
+        paywallConfiguration: paywallConfig,
+        didFinishPurchase: { _, purchaseResult in
+          switch purchaseResult {
+            case .success(let profile, _):
+              profileManager.subscriptionPurchased(with: profile)
+            default:
+              break
+          }
+          isShowingPaywall = false
+        },
+        didFailPurchase: { _, error in
+          isShowingPaywall = false
+          // TODO: Present error to user and offer alternative
+        },
+        didFinishRestore: { profile in
+          profileManager.subscriptionPurchased(with: profile)
+          isShowingPaywall = false
+        },
+        didFailRestore: { error in
+          isShowingPaywall = false
+          // TODO: Present error to user and offer alternative
+        },
+        didFailRendering: { error in
+          isShowingPaywall = false
+          // TODO: Present error to user and offer alternative
+        })
+    })
+    .task {
+      do {
+        if !profileManager.isPremium {
+          let paywall = try await Adapty.getPaywall(placementId: AppConstants.Adapty.placementID)
+          paywallConfig = try await AdaptyUI.getPaywallConfiguration(forPaywall: paywall)
+        }
+      } catch {
+        print("Error fetching paywall or paywall config: \(error)")
       }
-      .buttonStyle(.borderedProminent)
     }
   }
   

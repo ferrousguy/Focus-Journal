@@ -7,11 +7,24 @@
 //
 
 import SwiftUI
+import Adapty
+import AdaptyUI
 
 @main
 struct Focus_JournalApp: App {
   
-  init() {}
+  init() {
+    let configurationBuilder = AdaptyConfiguration.builder(withAPIKey: AppConstants.Adapty.apiKey)
+    
+    Task {
+      do {
+        try await Adapty.activate(with: configurationBuilder.build())
+        try await AdaptyUI.activate()
+      } catch {
+        print("Failed to activate Adapty SDK: \(error)")
+      }
+    }
+  }
   
   @State private var profileManager = ProfileManager()
   
@@ -19,6 +32,13 @@ struct Focus_JournalApp: App {
     WindowGroup {
       ContentView()
         .environment(profileManager)
+        .task {
+          do {
+            try await profileManager.refreshProfile()
+          } catch {
+            print("Error refreshing profile on launch: \(error)")
+          }
+        }
     }
   }
 }

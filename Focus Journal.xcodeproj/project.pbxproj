@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		92C74A432DEDFE6900018A0B /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = 92C74A422DEDFE6900018A0B /* Adapty */; };
+		92C74A452DEDFE6900018A0B /* AdaptyUI in Frameworks */ = {isa = PBXBuildFile; productRef = 92C74A442DEDFE6900018A0B /* AdaptyUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		92C74A112DEDFBBB00018A0B /* Focus Journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Focus Journal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92C74A432DEDFE6900018A0B /* Adapty in Frameworks */,
+				92C74A452DEDFE6900018A0B /* AdaptyUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "Focus Journal";
 			packageProductDependencies = (
+				92C74A422DEDFE6900018A0B /* Adapty */,
+				92C74A442DEDFE6900018A0B /* AdaptyUI */,
 			);
 			productName = "Focus Journal";
 			productReference = 92C74A112DEDFBBB00018A0B /* Focus Journal.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = 92C74A082DEDFBBB00018A0B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				92C74A412DEDFE6900018A0B /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92C74A122DEDFBBB00018A0B /* Products */;
 			projectDirPath = "";
@@ -320,6 +332,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		92C74A412DEDFE6900018A0B /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		92C74A422DEDFE6900018A0B /* Adapty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92C74A412DEDFE6900018A0B /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = Adapty;
+		};
+		92C74A442DEDFE6900018A0B /* AdaptyUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92C74A412DEDFE6900018A0B /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = AdaptyUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 92C74A092DEDFBBB00018A0B /* Project object */;
 }

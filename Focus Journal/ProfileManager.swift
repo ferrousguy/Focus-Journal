@@ -8,9 +8,21 @@
 
 import Foundation
 import Observation
+import Adapty
 
 @Observable
 final class ProfileManager {
+  var customerProfile: AdaptyProfile? {
+    didSet {
+      if let accessLevel = customerProfile?.accessLevels[AppConstants.Adapty.accessLevelID],
+         accessLevel.isActive || accessLevel.isInGracePeriod || accessLevel.isLifetime {
+        isPremium = true
+      } else {
+        isPremium = false
+      }
+    }
+  }
+  
   var isPremium: Bool = false
   var entries: [JournalEntry] = []
   
@@ -19,9 +31,17 @@ final class ProfileManager {
     entries.append(JournalEntry(date: Date().addingTimeInterval(-64100), entry: "Planning session"))
   }
   
-  func subscriptionPurchased() {
+  func purchasePremium() {
     // Mock unlock for demo
     isPremium = true
+  }
+  
+  func subscriptionPurchased(with updatedProfile: AdaptyProfile) {
+    customerProfile = updatedProfile
+  }
+  
+  func refreshProfile() async throws {
+    customerProfile = try await Adapty.getProfile()
   }
   
   func addEntry(_ text: String) {
