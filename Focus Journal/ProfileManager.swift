@@ -19,7 +19,7 @@ final class ProfileManager {
     entries.append(JournalEntry(date: Date().addingTimeInterval(-64100), entry: "Planning session"))
   }
   
-  func subscriptionPurchased() {
+  func purchasePremium() {
     // Mock unlock for demo
     isPremium = true
   }
