@@ -2,23 +2,24 @@
 //  ContentView.swift
 //  Focus Journal
 //
-//  Created by Joben Gohlke on 6/2/25.
+//  Created by Ben Gohlke on 5/27/25.
+// Copyright © 2025 Adapty. All rights reserved.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+  var body: some View {
+    NavigationStack {
+      HomeView()
+        .navigationTitle("Focus Journal")
     }
+  }
 }
 
 #Preview {
-    ContentView()
+  @Previewable @State var profileManager = ProfileManager()
+  
+  ContentView()
+    .environment(profileManager)
 }
