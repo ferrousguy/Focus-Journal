@@ -1,4 +1,4 @@
-# [Focus Journal for iOS with UIKit](https://github.com/ferrousguy/Focus-Journal-iOS-SwiftUI)
+# [Focus Journal for iOS with SwiftUI](https://github.com/ferrousguy/Focus-Journal-iOS-SwiftUI)
 
 This repository demonstrates how to integrate the [Adapty SDK](https://adapty.io) into an existing SwiftUI-based iOS project. It contains two branches:
 
